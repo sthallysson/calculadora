@@ -39,3 +39,7 @@ btns.forEach((btn) => {
     Calculate(event);
   });
 });
+
+window.addEventListener('keydown', (event) => {
+  console.log(event.key);
+});
