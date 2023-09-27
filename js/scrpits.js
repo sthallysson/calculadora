@@ -1,26 +1,26 @@
-const display = document.querySelector(".calculator__display");
-const btns = document.querySelectorAll(".calculator__btn");
+const display = document.querySelector('.calculator__display');
+const btns = document.querySelectorAll('.calculator__btn');
 
-let outputValue = "";
+let outputValue = '';
 
 function Calculate(event) {
-  if (event.target.value !== "=") {
+  if (event.target.value !== '=') {
     outputValue += event.target.value;
   }
 
   display.innerHTML = outputValue;
 
   switch (event.target.value) {
-    case "=":
+    case '=':
       const result = eval(outputValue);
-      display.innerHTML = result;
+      outputValue = result;
+      display.innerHTML = outputValue;
       break;
-    case "c":
-      outputValue = "";
-      console.log(outputValue.length);
+    case 'c':
+      outputValue = '';
       display.innerHTML = 0;
       break;
-    case "del":
+    case 'del':
       outputValue = outputValue.slice(0, -4);
       display.innerHTML = display.innerHTML.slice(0, -4);
       break;
@@ -29,15 +29,13 @@ function Calculate(event) {
       break;
   }
 
-  if (display.innerHTML === "") {
-    display.innerHTML = "0";
+  if (display.innerHTML === '') {
+    display.innerHTML = '0';
   }
-
-  console.log(outputValue);
 }
 
 btns.forEach((btn) => {
-  btn.addEventListener("click", (event) => {
+  btn.addEventListener('click', (event) => {
     Calculate(event);
   });
 });
