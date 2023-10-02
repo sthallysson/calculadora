@@ -1,45 +1,58 @@
-const display = document.querySelector('.calculator__display');
-const btns = document.querySelectorAll('.calculator__btn');
+const display = document.querySelector(".calculator__display");
+const btns = document.querySelectorAll(".calculator__btn");
 
-let outputValue = '';
+let result = "";
 
-function Calculate(event) {
-  if (event.target.value !== '=') {
-    outputValue += event.target.value;
+function calculate(event) {
+  clickedCalculate(event);
+
+  if (display.innerHTML === "") {
+    display.innerHTML = "0";
+  }
+}
+
+function clickedCalculate(event) {
+  const clickedBtnValue = event.target.value;
+
+  if (clickedBtnValue !== "=") {
+    result += clickedBtnValue;
   }
 
-  display.innerHTML = outputValue;
+  display.innerHTML = result;
 
-  switch (event.target.value) {
-    case '=':
-      const result = eval(outputValue);
-      outputValue = result;
-      display.innerHTML = outputValue;
+  switch (clickedBtnValue) {
+    case "=":
+      result = eval(result);
+      display.innerHTML = result;
       break;
-    case 'c':
-      outputValue = '';
+    case "c":
+      result = "";
       display.innerHTML = 0;
       break;
-    case 'del':
-      outputValue = outputValue.slice(0, -4);
+    case "del":
+      result = result.slice(0, -4);
       display.innerHTML = display.innerHTML.slice(0, -4);
       break;
+  }
+}
 
-    default:
+function keyboardCalculate(event) {
+  const key = event.key;
+
+  switch (key) {
+    case "Backspace":
+      result = result.slice(0, -1);
+      display.innerHTML = display.innerHTML.slice(0, -1);
       break;
   }
 
-  if (display.innerHTML === '') {
-    display.innerHTML = '0';
+  if (display.innerHTML === "") {
+    display.innerHTML = "0";
   }
 }
 
 btns.forEach((btn) => {
-  btn.addEventListener('click', (event) => {
-    Calculate(event);
-  });
+  btn.addEventListener("click", calculate);
 });
 
-window.addEventListener('keydown', (event) => {
-  console.log(event.key);
-});
+window.addEventListener("keydown", keyboardCalculate);
